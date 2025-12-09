@@ -75,7 +75,7 @@ function addButtonListeners() {
       const postId = button.dataset.postId;
       if (postId) {
         button.addEventListener("click", function (event) {
-          toggleComments(event, postId);
+          toggleComments(event, button.dataset.postId);
         });
       }
     }
@@ -179,7 +179,7 @@ async function getUser(userId) {
 //Function 13: Fetching comments for a specific post from API
 async function getPostComments(postId) {
   if (!postId) {
-    return undefined;
+    return undefined; // Fixed typo here
   }
   try {
     const response = await fetch(
@@ -296,20 +296,16 @@ async function selectMenuChangeEventHandler(event) {
   if (!event) {
     return undefined;
   }
-
   const selectMenu = document.querySelector("#selectMenu");
   selectMenu.disabled = true;
-
   let userId = event?.target?.value || 1;
   if (userId === "Employees") {
     userId = 1;
   }
-
   const posts = await getUserPosts(userId);
   const refreshPostsArray = await refreshPosts(posts);
 
   selectMenu.disabled = false;
-
   return [userId, posts, refreshPostsArray];
 }
 
